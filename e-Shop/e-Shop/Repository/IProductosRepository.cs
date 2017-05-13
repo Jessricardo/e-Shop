@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace e_Shop.Productos
+namespace e_Shop.Repository
 {
     interface IProductosRepository
     {
         Task<bool> InsertarProducto(ProductoModel p);
         Task<ProductoModel> LeerProductoPorCodigo(string Codigo);
-        Task<List<ProductoModel>> LeerProductos();
+        List<ProductoModel> LeerProductos();
     }
 }

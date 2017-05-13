@@ -1,5 +1,5 @@
 ﻿using e_Shop.Models;
-using e_Shop.Productos;
+using e_Shop.Repository;
 using Microsoft.Azure;
 using System;
 using System.Collections.Generic;
@@ -18,11 +18,13 @@ namespace e_Shop.Controllers
             productos = new AzureProductosRepository(CloudConfigurationManager.GetSetting("StorageConnectionString"));
         }
         // GET: Productos
-        public async Task<ActionResult> Index()
+        [Authorize]
+        public ActionResult Index()
         {
-            var model = await productos.LeerProductos();
+            var model = productos.LeerProductos();
             return View(model);
         }
+        [Authorize]
         public ActionResult Crear()
         {
             var model = new ProductoModel();
