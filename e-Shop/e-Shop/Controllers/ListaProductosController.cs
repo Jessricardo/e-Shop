@@ -23,10 +23,22 @@ namespace e_Shop.Controllers
             return productos.LeerProductos();
         }
 
-        // GET: api/ListaProductos/5
-        public string Get(int id)
+        [HttpGet]
+        [Route("api/allcategories")]
+        public IEnumerable<string> categorias()
         {
-            return "value";
+            List<ProductoModel> listaProductos = productos.LeerProductos();
+            List<string> listaCategorias = new List<string>();
+            foreach(ProductoModel producto in listaProductos)
+            {
+                listaCategorias.Add(producto.Categoria);
+            }
+            return listaCategorias.Distinct().ToList();
+
+        }
+        // GET: api/ListaProductos/5
+        public void Get(int id)
+        {
         }
 
         // POST: api/ListaProductos
