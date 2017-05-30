@@ -1,0 +1,27 @@
+﻿@model List<string>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Categorías</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th></th>
+    </tr>
+
+@foreach (string item in Model) {
+    <tr>
+        <td>@item</td>
+        <td>
+            @Html.ActionLink("Borrar", "Delete", new { categoria = item })
+            @Html.ActionLink("Productos", "Details", new { id = item })
+        </td>
+    </tr>
+}
+
+</table>

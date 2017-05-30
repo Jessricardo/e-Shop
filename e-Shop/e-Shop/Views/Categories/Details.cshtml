@@ -1,0 +1,52 @@
+﻿@model IEnumerable<e_Shop.Models.ProductoModel>
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Juegos de @Model.First().Categoria.ToString()</h2>
+
+<p>
+    @Html.ActionLink("Crear categoría", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Codigo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Categoria)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Precio)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Codigo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Categoria)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Precio)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Descripcion)
+        </td>
+    </tr>
+}
+
+</table>
