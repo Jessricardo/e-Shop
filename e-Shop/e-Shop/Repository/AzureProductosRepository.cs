@@ -29,6 +29,7 @@ namespace e_Shop.Repository
             table.CreateIfNotExists();
 
             var productoNuevo = new ProductoModelEntity(p.Codigo);
+            productoNuevo.Codigo = p.Codigo;
             productoNuevo.Categoria = p.Categoria;
             productoNuevo.Nombre = p.Nombre;
             productoNuevo.Precio = p.Precio;
@@ -60,7 +61,7 @@ namespace e_Shop.Repository
                 ProductoModel producto = new ProductoModel()
                 {
                     Categoria = entity.Categoria,
-                    Codigo = entity.RowKey,
+                    Codigo = entity.Codigo,
                     Descripcion = entity.Descripcion,
                     Nombre = entity.Nombre,
                     Precio = entity.Precio
