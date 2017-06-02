@@ -42,9 +42,34 @@ namespace e_Shop.Repository
             return true;
         }
 
-        public Task<ProductoModel> LeerProductoPorCodigo(string Codigo)
+        public ProductoModel LeerProductoPorCodigo(string Codigo)
         {
-            throw new NotImplementedException();
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(this.ConnectionString);
+            // Create the table client.
+            CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
+            // Retrieve a reference to the table.
+            CloudTable table = tableClient.GetTableReference("productos");
+            TableOperation retrieveOperation = TableOperation.Retrieve<ProductoModelEntity>("Productos", Codigo);
+            // Execute the retrieve operation.
+            TableResult retrievedResult = table.Execute(retrieveOperation);
+            // Print the phone number of the result.
+            if (retrievedResult.Result != null)
+            {
+                ProductoModelEntity entity = ((ProductoModelEntity)retrievedResult.Result);
+                ProductoModel producto = new ProductoModel()
+                {
+                    Categoria = entity.Categoria,
+                    Codigo = entity.Codigo,
+                    Descripcion = entity.Descripcion,
+                    Nombre = entity.Nombre,
+                    Precio = entity.Precio
+                };
+                return producto;
+            }
+            else
+            {
+                return (new ProductoModel());
+            }
         }
 
         public List<ProductoModel> LeerProductos()
@@ -69,6 +94,32 @@ namespace e_Shop.Repository
                 lista.Add(producto);
             }
             return lista;
+        }
+        public async Task<bool> borrarProducto(string idProducto)
+        {
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(this.ConnectionString);
+            // Create the table client.
+            CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
+            // Retrieve a reference to the table.
+            CloudTable table = tableClient.GetTableReference("productos");
+            // Create the table if it doesn't exist.
+            var deleteOp = TableOperation.Retrieve<ProductoModelEntity>("Productos", idProducto);
+            // Execute the operation.
+            TableResult retrievedResult = table.Execute(deleteOp);
+            // Assign the result to a CustomerEntity.
+            ProductoModelEntity deleteEntity = (ProductoModelEntity)retrievedResult.Result;
+            // Create the Delete TableOperation.
+            if (deleteEntity != null)
+            {
+                TableOperation deleteOperation = TableOperation.Delete(deleteEntity);
+                // Execute the operation.
+                table.Execute(deleteOperation);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         private class ProductoModelEntity : TableEntity
         {

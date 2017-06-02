@@ -37,5 +37,42 @@ namespace e_Shop.Controllers
 
             return RedirectToAction("Index");
         }
+        public ActionResult Edit(int id)
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Edit(int id, FormCollection collection)
+        {
+            try
+            {
+                // TODO: Add update logic here
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        public ActionResult Delete(string id)
+        {
+            return View(productos.LeerProductoPorCodigo(id));
+        }
+
+        [HttpPost]
+        public ActionResult Delete(string id, FormCollection collection)
+        {
+            try
+            {
+                productos.borrarProducto(id);
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+        }
     }
 }

@@ -10,7 +10,8 @@ namespace e_Shop.Repository
     interface IProductosRepository
     {
         Task<bool> InsertarProducto(ProductoModel p);
-        Task<ProductoModel> LeerProductoPorCodigo(string Codigo);
+        ProductoModel LeerProductoPorCodigo(string Codigo);
         List<ProductoModel> LeerProductos();
+        Task<bool> borrarProducto(string idProducto);
     }
 }

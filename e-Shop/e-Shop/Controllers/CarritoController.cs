@@ -1,6 +1,7 @@
 ﻿using e_Shop.Models;
 using e_Shop.Repository;
 using Microsoft.Azure;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace e_Shop.Controllers
             partidas = new AzureCarritoRepository(CloudConfigurationManager.GetSetting("StorageConnectionString"));
         }
         // GET: Carrito
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
             string idUsuario;
             bool val1 = System.Web.HttpContext.Current.User.Identity.IsAuthenticated;
@@ -35,19 +36,22 @@ namespace e_Shop.Controllers
                 }
                 idUsuario = Session["tokenSession"].ToString();
             }
-            var listaPartidas = partidas.LeerPartidas(idUsuario);
+            var listaPartidas = await partidas.LeerPartidas(idUsuario);
             return View(listaPartidas);
         }
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route("Carrito/agregar")]
-        public async Task<HttpStatusCode> agregar([FromBody]PartidaModel nuevaPartida)
+        public async Task<PartidaModel> agregar([FromBody]PartidaModel value)
         {
-            if (await partidas.InsertarPartida(nuevaPartida))
+            if (await partidas.InsertarPartida(value))
             {
-                return HttpStatusCode.OK;
-            }else
+                value.id = "Bien";
+                return value;
+            }
+            else
             {
-                return HttpStatusCode.NotImplemented;
+                value.id = "Mal";
+                return value;
             }
         }
         [System.Web.Http.HttpDelete]

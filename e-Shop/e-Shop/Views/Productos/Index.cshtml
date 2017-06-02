@@ -2,6 +2,20 @@
 
 @{
     ViewBag.Title = "Index";
+    string idUsuario;
+    bool val1 = System.Web.HttpContext.Current.User.Identity.IsAuthenticated;
+    if (val1)
+    {
+        idUsuario = System.Web.HttpContext.Current.User.Identity.Name;
+    }
+    else
+    {
+        if (Session["tokenSession"] == null)
+        {
+            Session["tokenSession"] = Guid.NewGuid().ToString();
+        }
+        idUsuario = Session["tokenSession"].ToString();
+    }
 }
 
 <h2>Index</h2>
@@ -47,11 +61,40 @@
             @Html.DisplayFor(modelItem => item.Descripcion)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            <button onclick="agregar('@item.Codigo')">+</button>
+            @Html.ActionLink("Delete", "Delete", new { id=item.Codigo  })
         </td>
     </tr>
 }
 
 </table>
+
+<script type="text/javascript">
+    alert("Token: @idUsuario");
+    function agregar(codigo) {
+        alert(codigo);
+        $.ajax({
+            //La url de tu API
+            url: "/Carrito/agregar",
+            //tipo POST o GET
+            type : "POST",
+            //Aqui se especifica el tipo de datos a enviar
+            contentType: 'application/json',
+            //Aqui van los datos a enviar dependiendo el tipo (Json en este caso)
+            data : {
+                "id": "@Guid.NewGuid().ToString()" ,
+                "idCarrito": "@idUsuario" ,
+                "productoId":codigo,
+                "cantidad": 1
+            },
+            //Aqui es cuando recibes el status 200 y data es lo que recibes del servidor
+            success: function(data){
+                window.location.replace("/Carrito/Index");
+            },
+            //Cuando el servidor regresa un error
+            error : function(xhr, status) {
+                alert("¡Hubo un error al agregar!");
+            }
+        });
+    }
+</script>

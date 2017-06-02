@@ -375,9 +375,11 @@
     <Content Include="Views\Categories\Create.cshtml" />
     <Content Include="Views\Categories\Details.cshtml" />
     <Content Include="Views\Carrito\Index.cshtml" />
+    <Content Include="Views\Productos\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Borrar\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

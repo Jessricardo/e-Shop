@@ -17,7 +17,7 @@ namespace e_Shop.Repository
             this.ConnectionString = connectionString;
         }
 
-        public async Task<bool> CrearCarro(string idCarrito)
+        public async Task CrearCarro(string idCarrito)
         {
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(this.ConnectionString);
             // Create the table client.
@@ -32,7 +32,6 @@ namespace e_Shop.Repository
             carritoNuevo.id = idCarrito;
             var insertOp = TableOperation.Insert(carritoNuevo);
             await table.ExecuteAsync(insertOp);
-            return true;
         }
         public bool existsCarrito(string idUsuario)
         {
@@ -41,6 +40,7 @@ namespace e_Shop.Repository
             CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
             // Retrieve a reference to the table.
             CloudTable table = tableClient.GetTableReference("carritos");
+            table.CreateIfNotExists();
             TableOperation retrieveOperation = TableOperation.Retrieve<CarritoModelEntity>("Carritos", idUsuario);
             // Execute the retrieve operation.
             TableResult retrievedResult = table.Execute(retrieveOperation);
@@ -63,10 +63,9 @@ namespace e_Shop.Repository
         }
         public async Task<bool> InsertarPartida(PartidaModel partida)
         {
-            if (!existsCarrito(partida.idCarrito))
-            {
-                return false;
-            }
+            //if (!existsCarrito(partida.idCarrito)){
+            //    await CrearCarro(partida.idCarrito);
+            //}
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(this.ConnectionString);
             // Create the table client.
             CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
@@ -82,10 +81,14 @@ namespace e_Shop.Repository
             partidaNueva.productoId = partida.productoId;
             var insertOp = TableOperation.Insert(partidaNueva);
             var res = await table.ExecuteAsync(insertOp);
-            return true;
+            if (res.HttpStatusCode == 200)
+            {
+                return true;
+            }
+            return false;
         }
 
-        public List<PartidaModel> LeerPartidas(string idCarrito)
+        public async Task<List<PartidaModel>> LeerPartidas(string idCarrito)
         {
             if (!existsCarrito(idCarrito))
             {
@@ -129,6 +132,9 @@ namespace e_Shop.Repository
             // Create the Delete TableOperation.
             if (deleteEntity != null)
             {
+                TableOperation deleteOperation = TableOperation.Delete(deleteEntity);
+                // Execute the operation.
+                table.Execute(deleteOperation);
                 return true;
             }
             else
@@ -166,9 +172,9 @@ namespace e_Shop.Repository
     interface ICarritoRepository
     {
         bool existsCarrito(string idUsuario);
-        Task<bool> CrearCarro(string idCarrito);
+        Task CrearCarro(string idCarrito);
         Task<bool> InsertarPartida(PartidaModel partida);
-        List<PartidaModel> LeerPartidas(string idCarrito);
+        Task<List<PartidaModel>> LeerPartidas(string idCarrito);
         Task<bool> QuitarPartida(PartidaModel viejaPartida);
     }
 }
