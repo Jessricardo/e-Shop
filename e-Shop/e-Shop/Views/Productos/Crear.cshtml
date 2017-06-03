@@ -2,6 +2,8 @@
 
 @{
     ViewBag.Title = "Crear";
+    e_Shop.Repository.CategoriasRepository categorias = new e_Shop.Repository.CategoriasRepository();
+    List<string> lista = categorias.Todaslascategorias();
 }
 
 <h2>Crear</h2>

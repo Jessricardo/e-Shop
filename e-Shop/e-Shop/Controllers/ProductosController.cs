@@ -13,9 +13,10 @@ namespace e_Shop.Controllers
     public class ProductosController : Controller
     {
         private IProductosRepository productos;
+        
         public ProductosController()
         {
-            productos = new AzureProductosRepository(CloudConfigurationManager.GetSetting("StorageConnectionString"));
+            productos = new AzureProductosRepository(CloudConfigurationManager.GetSetting("StorageConnectionString"));            
         }
         // GET: Productos
         [Authorize]

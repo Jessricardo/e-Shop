@@ -37,8 +37,9 @@ namespace e_Shop.Controllers
 
         }
         // GET: api/ListaProductos/5
-        public void Get(int id)
+        public ProductoModel Get(string id)
         {
+            return productos.LeerProductoPorCodigo(id);
         }
 
         // POST: api/ListaProductos

@@ -75,13 +75,13 @@ namespace e_Shop.Repository
             table.CreateIfNotExists();
             string id = Guid.NewGuid().ToString();
             var partidaNueva = new PartidaModelEntity(id);
-            partidaNueva.id = partida.id;
+            partidaNueva.id = id;
             partidaNueva.idCarrito = partida.idCarrito;
             partidaNueva.cantidad = partida.cantidad;
             partidaNueva.productoId = partida.productoId;
             var insertOp = TableOperation.Insert(partidaNueva);
             var res = await table.ExecuteAsync(insertOp);
-            if (res.HttpStatusCode == 200)
+            if (res.HttpStatusCode == 204)
             {
                 return true;
             }
@@ -99,7 +99,7 @@ namespace e_Shop.Repository
             CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
             // Retrieve a reference to the table.
             CloudTable table = tableClient.GetTableReference("partidas");
-            TableQuery<PartidaModelEntity> query = new TableQuery<PartidaModelEntity>().Where(TableQuery.GenerateFilterCondition("RowKey", QueryComparisons.Equal, idCarrito));
+            TableQuery<PartidaModelEntity> query = new TableQuery<PartidaModelEntity>().Where(TableQuery.GenerateFilterCondition("idCarrito", QueryComparisons.Equal, idCarrito));
             List<PartidaModel> lista = new List<PartidaModel>();
             foreach (PartidaModelEntity entity in table.ExecuteQuery(query))
             {

@@ -1,6 +1,7 @@
 ﻿using e_Shop.Models;
 using e_Shop.Repository;
 using Microsoft.Azure;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -36,35 +37,40 @@ namespace e_Shop.Controllers
                 }
                 idUsuario = Session["tokenSession"].ToString();
             }
-            var listaPartidas = await partidas.LeerPartidas(idUsuario);
-            return View(listaPartidas);
+            var model = await partidas.LeerPartidas(idUsuario);
+            return View(model);
+        }
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("Carrito/detalles/{id}")]
+        public async Task<string> detalles(string id)
+        {
+            List<PartidaModel> todos = await partidas.LeerPartidas(id);
+            return JsonConvert.SerializeObject(todos);
         }
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route("Carrito/agregar")]
-        public async Task<PartidaModel> agregar([FromBody]PartidaModel value)
+        public async Task<HttpStatusCodeResult> agregar([FromBody]PartidaModel value)
         {
             if (await partidas.InsertarPartida(value))
             {
-                value.id = "Bien";
-                return value;
+                return new HttpStatusCodeResult(200);
             }
             else
             {
-                value.id = "Mal";
-                return value;
+                return new HttpStatusCodeResult(500);
             }
         }
-        [System.Web.Http.HttpDelete]
+        [System.Web.Http.HttpPost]
         [System.Web.Http.Route("Carrito/quitar")]
-        public async Task<HttpStatusCode> quitar([FromBody]PartidaModel viejaPartida)
+        public async Task<HttpStatusCodeResult> quitar([FromBody]PartidaModel viejaPartida)
         {
             if (await partidas.QuitarPartida(viejaPartida))
             {
-                return HttpStatusCode.OK;
+                return new HttpStatusCodeResult(200);
             }
             else
             {
-                return HttpStatusCode.NotImplemented;
+                return new HttpStatusCodeResult(500);
             }
         }
        
