@@ -14,5 +14,6 @@ namespace e_Shop.Models
         public string Categoria { get; set; }
         public double Precio { get; set; }
         public string Descripcion { get; set; }
+        public string url { get; set; }
     }
 }

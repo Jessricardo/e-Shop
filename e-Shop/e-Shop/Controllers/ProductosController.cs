@@ -32,10 +32,11 @@ namespace e_Shop.Controllers
             return View(model);
         }
         [HttpPost]
-        public async Task<ActionResult> Crear(ProductoModel model)
+        public async Task<ActionResult> Crear(ProductoModel model,HttpPostedFileBase foto)
         {
+            var urlFoto = await productos.ActualizarImagen(model.Codigo,foto.FileName, foto.InputStream);
+            model.url = urlFoto;
             await productos.InsertarProducto(model);
-
             return RedirectToAction("Index");
         }
         public ActionResult Edit(int id)

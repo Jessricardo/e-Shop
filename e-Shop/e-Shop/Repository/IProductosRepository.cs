@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace e_Shop.Repository
 {
@@ -13,5 +14,6 @@ namespace e_Shop.Repository
         ProductoModel LeerProductoPorCodigo(string Codigo);
         List<ProductoModel> LeerProductos();
         Task<bool> borrarProducto(string idProducto);
+        Task<string> ActualizarImagen(string codigo, string fileName, Stream inputStream);
     }
 }

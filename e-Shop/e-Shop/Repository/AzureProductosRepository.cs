@@ -6,6 +6,9 @@ using System.Web;
 using e_Shop.Models;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Table;
+using System.IO;
+using Microsoft.Azure;
+using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace e_Shop.Repository
 {
@@ -34,7 +37,7 @@ namespace e_Shop.Repository
             productoNuevo.Nombre = p.Nombre;
             productoNuevo.Precio = p.Precio;
             productoNuevo.Descripcion = p.Descripcion;
-
+            productoNuevo.url = p.url;
             var insertOp = TableOperation.Insert(productoNuevo);
 
             var res = await table.ExecuteAsync(insertOp);
@@ -62,7 +65,8 @@ namespace e_Shop.Repository
                     Codigo = entity.Codigo,
                     Descripcion = entity.Descripcion,
                     Nombre = entity.Nombre,
-                    Precio = entity.Precio
+                    Precio = entity.Precio,
+                    url = entity.url
                 };
                 return producto;
             }
@@ -89,7 +93,8 @@ namespace e_Shop.Repository
                     Codigo = entity.Codigo,
                     Descripcion = entity.Descripcion,
                     Nombre = entity.Nombre,
-                    Precio = entity.Precio
+                    Precio = entity.Precio,
+                    url = entity.url
                 };
                 lista.Add(producto);
             }
@@ -121,6 +126,28 @@ namespace e_Shop.Repository
                 return false;
             }
         }
+        public async Task<string> ActualizarImagen(string codigo, string fileName, Stream inputStream)
+        {
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(this.ConnectionString);
+
+            // Create the blob client.
+            CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+
+            // Retrieve reference to a previously created container.
+            CloudBlobContainer container = blobClient.GetContainerReference("imagenes");
+
+            // Create the container if it doesn't already exist.
+            container.CreateIfNotExists();
+
+            // Retrieve reference to a blob named "myblob".
+            var name = codigo + Path.GetExtension(fileName);
+            CloudBlockBlob blockBlob = container.GetBlockBlobReference(name);
+
+            // Create or overwrite the "myblob" blob with contents from a local file.
+            await blockBlob.UploadFromStreamAsync(inputStream);
+
+            return blockBlob.SnapshotQualifiedUri.ToString();
+        }
         private class ProductoModelEntity : TableEntity
         {
             public ProductoModelEntity(string Codigo)
@@ -134,6 +161,7 @@ namespace e_Shop.Repository
             public string Categoria { get; set; }
             public double Precio { get; set; }
             public string Descripcion { get; set; }
+            public string url { get; set; }
         }
     }
 }

@@ -22,3 +22,11 @@ select,
 textarea {
     max-width: 280px;
 }
+
+td{
+    vertical-align:middle !important;
+}
+.navbar-inverse {
+    background-color: white !important;
+    border-bottom: 1px solid #8400ff !important;
+}
