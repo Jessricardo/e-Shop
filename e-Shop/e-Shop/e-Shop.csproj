@@ -271,6 +271,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ListaProductosController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PedidosController.cs" />
     <Compile Include="Controllers\ProductosController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -279,8 +280,10 @@
     <Compile Include="Models\CarritoModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\PedidoModel.cs" />
     <Compile Include="Models\ProductoModel.cs" />
     <Compile Include="Repository\AzureCarritoRepository.cs" />
+    <Compile Include="Repository\AzurePedidosRepository.cs" />
     <Compile Include="Repository\CategoriasRepository.cs" />
     <Compile Include="Repository\IProductosRepository.cs" />
     <Compile Include="Repository\AzureProductosRepository.cs" />
@@ -376,6 +379,9 @@
     <Content Include="Views\Categories\Details.cshtml" />
     <Content Include="Views\Carrito\Index.cshtml" />
     <Content Include="Views\Productos\Delete.cshtml" />
+    <Content Include="Views\Pedidos\Index.cshtml" />
+    <Content Include="Views\Pedidos\Details.cshtml" />
+    <Content Include="Views\Pedidos\Crear.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

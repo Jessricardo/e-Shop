@@ -73,13 +73,15 @@ namespace e_Shop.Repository
             CloudTable table = tableClient.GetTableReference("partidas");
             // Create the table if it doesn't exist.
             table.CreateIfNotExists();
-            string id = Guid.NewGuid().ToString();
-            var partidaNueva = new PartidaModelEntity(id);
-            partidaNueva.id = id;
+            var partidaNueva = new PartidaModelEntity(partida.id);
+            partidaNueva.id = partida.id;
             partidaNueva.idCarrito = partida.idCarrito;
             partidaNueva.cantidad = partida.cantidad;
             partidaNueva.productoId = partida.productoId;
-            var insertOp = TableOperation.Insert(partidaNueva);
+            partidaNueva.costo = partida.costo;
+            partidaNueva.nombre = partida.nombre;
+            partidaNueva.pedidoId = partida.pedidoId;
+            var insertOp = TableOperation.InsertOrReplace(partidaNueva);
             var res = await table.ExecuteAsync(insertOp);
             if (res.HttpStatusCode == 204)
             {
@@ -108,13 +110,38 @@ namespace e_Shop.Repository
                     cantidad = entity.cantidad,
                     id = entity.id,
                     idCarrito = entity.idCarrito,
-                    productoId = entity.productoId
+                    productoId = entity.productoId,
+                    costo = entity.costo,
+                    nombre = entity.nombre
                 };
                 lista.Add(partida);
             }
             return lista;
         }
-
+        public async Task<List<PartidaModel>> LeerPartidasPorPedido(string idPedido)
+        {
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(this.ConnectionString);
+            // Create the table client.
+            CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
+            // Retrieve a reference to the table.
+            CloudTable table = tableClient.GetTableReference("partidas");
+            TableQuery<PartidaModelEntity> query = new TableQuery<PartidaModelEntity>().Where(TableQuery.GenerateFilterCondition("pedidoId", QueryComparisons.Equal, idPedido));
+            List<PartidaModel> lista = new List<PartidaModel>();
+            foreach (PartidaModelEntity entity in table.ExecuteQuery(query))
+            {
+                PartidaModel partida = new PartidaModel()
+                {
+                    cantidad = entity.cantidad,
+                    id = entity.id,
+                    idCarrito = entity.idCarrito,
+                    productoId = entity.productoId,
+                    costo = entity.costo,
+                    nombre = entity.nombre
+                };
+                lista.Add(partida);
+            }
+            return lista;
+        }
         public async Task<bool> QuitarPartida(PartidaModel viejaPartida)
         {
             string idPartida = viejaPartida.id;
@@ -167,6 +194,9 @@ namespace e_Shop.Repository
             public string idCarrito { get; set; }
             public string productoId { get; set; }
             public int cantidad { get; set; }
+            public double costo { get; set; }
+            public string nombre { get; set; }
+            public string pedidoId { get; set; }
         }
     }
     interface ICarritoRepository

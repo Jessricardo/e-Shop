@@ -16,6 +16,7 @@ namespace e_Shop.Models
             // Add custom user claims here
             return userIdentity;
         }
+        public string APIKey { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>

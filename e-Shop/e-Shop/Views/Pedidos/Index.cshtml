@@ -1,0 +1,41 @@
+﻿@model IEnumerable<e_Shop.Models.PedidoModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Pedidos</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            ID
+        </th>
+        <th>
+            Estado
+        </th>
+        <th>
+            Total
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.estado)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.total)
+        </td>
+        <td>
+            @Html.ActionLink("Details", "Details", new { id=item.id })
+        </td>
+    </tr>
+}
+
+</table>

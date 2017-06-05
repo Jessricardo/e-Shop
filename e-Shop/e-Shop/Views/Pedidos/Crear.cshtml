@@ -1,0 +1,32 @@
+﻿@model e_Shop.Models.PedidoModel
+
+@{
+    ViewBag.Title = "Crear";
+}
+
+<h2>¡Su pedido se ha realizado!</h2>
+
+<div>
+    <h4>PedidoModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Pase a pagar: @Model.total
+        </dt>
+
+        <dd>
+            Cuenta: @Model.cuenta
+        </dd>
+
+        <dt>
+            Estado: @Model.estado
+        </dt>
+
+        <dd>
+            ID del pedido: @Model.id
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Ver todos", "Index")
+</p>

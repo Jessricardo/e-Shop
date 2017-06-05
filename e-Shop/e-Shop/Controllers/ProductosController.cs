@@ -19,7 +19,6 @@ namespace e_Shop.Controllers
             productos = new AzureProductosRepository(CloudConfigurationManager.GetSetting("StorageConnectionString"));            
         }
         // GET: Productos
-        [Authorize]
         public ActionResult Index()
         {
             var model = productos.LeerProductos();

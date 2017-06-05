@@ -1,0 +1,42 @@
+﻿@model IEnumerable<e_Shop.Models.PartidaModel>
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Detalles</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            ID Juego
+        </th>
+        <th>
+            Nombre
+        </th>
+        <th>
+            Cantidad
+        </th>
+        <th>
+            Costo
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.productoId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.cantidad)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.costo)
+        </td>
+    </tr>
+}
+
+</table>

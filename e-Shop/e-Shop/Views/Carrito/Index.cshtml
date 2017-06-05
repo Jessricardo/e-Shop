@@ -2,20 +2,21 @@
 
 @{
     ViewBag.Title = "Index";
+    double total = 0;
 }
 
-<h2>Index</h2>
+<h2>Tu Carrito</h2>
 
 <table class="table">
     <tr>
         <th>
-            Carrito
-        </th>
-        <th>
-            Producto ID
+            Juego
         </th>
         <th>
             Cantidad
+        </th>
+        <th>
+            Costo
         </th>
         <th></th>
     </tr>
@@ -23,13 +24,14 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.idCarrito)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.productoId)
+            @Html.DisplayFor(modelItem => item.nombre)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.cantidad)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.costo)
+            @{total = total + item.costo;}
         </td>
         <td>
             <button onclick="quitar('@item.id','@item.idCarrito','@item.productoId',@item.cantidad)">-</button>
@@ -38,7 +40,23 @@
 }
 
 </table>
-
+<div>
+    Total: @total
+</div>
+<div>
+    @if (total > 0) {
+        @Html.ActionLink(
+        "Comprar",                                                  // linkText
+        "Crear",                                    // actionName
+        "Pedidos",                                                   // controllerName
+        new
+        {                                                     // routeValues
+            totalCant = total
+        },
+        null                                                      // htmlAttributes
+        );
+    }
+</div>
 <script type="text/javascript">
     function quitar(id,idCarrito,productoId,cantidad) {
         $.ajax({

@@ -18,5 +18,8 @@ namespace e_Shop.Models
         public string idCarrito { get; set; }
         public string productoId { get; set; }
         public int cantidad { get; set; }
+        public double costo { get; set; }
+        public string nombre { get; set; }
+        public string pedidoId { get; set; }
     }
 }
