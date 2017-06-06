@@ -63,9 +63,9 @@ namespace e_Shop.Repository
         }
         public async Task<bool> InsertarPartida(PartidaModel partida)
         {
-            //if (!existsCarrito(partida.idCarrito)){
-            //    await CrearCarro(partida.idCarrito);
-            //}
+            if (!existsCarrito(partida.idCarrito)){
+               await CrearCarro(partida.idCarrito);
+            }
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(this.ConnectionString);
             // Create the table client.
             CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
