@@ -45,16 +45,10 @@ namespace e_Shop.Controllers
         [Authorize]
         public async Task<ActionResult> Crear(double totalCant)
         {
-            if (Session["tokenSession"] != null)
+            bool val1 = System.Web.HttpContext.Current.User.Identity.IsAuthenticated;
+            if (val1)
             {
-                idUsuario = Session["tokenSession"].ToString();
-            }else
-            {
-                bool val1 = System.Web.HttpContext.Current.User.Identity.IsAuthenticated;
-                if (val1)
-                {
-                    idUsuario = System.Web.HttpContext.Current.User.Identity.Name;
-                }
+                idUsuario = System.Web.HttpContext.Current.User.Identity.Name;
             }
             PedidoModel model =await pedidos.crearPedido(idUsuario,totalCant);
             return View(model);
