@@ -32,7 +32,29 @@ namespace e_Shop.Controllers
             var lista = await pedidos.leerPedidos(idUsuario);
             return View(lista);
         }
-
+        [Authorize]
+        public async Task<ActionResult> IndexAdmin()
+        {
+            bool val1 = System.Web.HttpContext.Current.User.Identity.IsAuthenticated;
+            if (val1)
+            {
+                idUsuario = System.Web.HttpContext.Current.User.Identity.Name;
+                if(idUsuario == "admin@hotmail.com")
+                {
+                    var lista = await pedidos.Todos();
+                    return View(lista);
+                }
+            }
+            return RedirectToAction("Index");
+        }
+        public async Task<ActionResult> Actualizar(string id,string estado)
+        {
+            if(await pedidos.actualizar(id, estado))
+            {
+                return RedirectToAction("IndexAdmin");
+            }
+            return RedirectToAction("Index");
+        }
         // GET: Pedidos/Details/5
         [Authorize]
         public async Task<ActionResult> Details(string id)

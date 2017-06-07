@@ -384,6 +384,7 @@
     <Content Include="Views\Pedidos\Index.cshtml" />
     <Content Include="Views\Pedidos\Details.cshtml" />
     <Content Include="Views\Pedidos\Crear.cshtml" />
+    <Content Include="Views\Pedidos\IndexAdmin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

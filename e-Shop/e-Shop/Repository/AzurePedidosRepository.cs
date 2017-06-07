@@ -117,6 +117,30 @@ namespace e_Shop.Repository
             return lista;
         }
 
+        public async Task<List<PedidoModel>> Todos()
+        {
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(this.ConnectionString);
+            // Create the table client.
+            CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
+            // Retrieve a reference to the table.
+            CloudTable table = tableClient.GetTableReference("pedidos");
+            TableQuery<PedidoModelEntity> query = new TableQuery<PedidoModelEntity>().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, "Pedidos"));
+            List<PedidoModel> lista = new List<PedidoModel>();
+            foreach (PedidoModelEntity entity in table.ExecuteQuery(query))
+            {
+                PedidoModel pedido = new PedidoModel()
+                {
+                    idUsuario = entity.idUsuario,
+                    cuenta = entity.cuenta,
+                    estado = entity.estado,
+                    id = entity.RowKey,
+                    total = entity.total
+                };
+                lista.Add(pedido);
+            }
+            return lista;
+        }
+
         private class PedidoModelEntity :TableEntity
         {
             public PedidoModelEntity(string Codigo)
@@ -137,5 +161,6 @@ namespace e_Shop.Repository
         Task<PedidoModel> crearPedido(string idUsuario, double total);
         Task<List<PedidoModel>> leerPedidos(string idUsuario);
         Task<bool> actualizar(string id, string estado);
+        Task<List<PedidoModel>> Todos();
     }
 }
