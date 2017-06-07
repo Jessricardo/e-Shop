@@ -17,58 +17,39 @@
         idUsuario = Session["tokenSession"].ToString();
     }
 }
-
+<link href="~/Content/productoindex.css" rel="stylesheet" type="text/css" />
 <h2 style="text-align:center;">Nuestros Productos</h2>
 
 <!--<p>
     @Html.ActionLink("Agregar producto", "Crear")
 </p>-->
-<table class="table">
-    <tr>
-        <th>
-            Imagen
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Nombre)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Categoria)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Precio)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Descripcion)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
+@foreach (var item in Model)
+{
+    <div class="item">
+        <div>
             <img src="@item.url" alt="Icono del videojuego" style="width: 150px;filter: drop-shadow(0px 3px 3px #3b3b3b);" />
-        </td>
-        <td>
+        </div>
+        <div style="font-size: 2em;font-family: 'Maven Pro', sans-serif;">
             @Html.DisplayFor(modelItem => item.Nombre)
-        </td>
-        <td>
+        </div>
+        <div>
             @Html.DisplayFor(modelItem => item.Categoria)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Precio)
-        </td>
-        <td>
+        </div>
+        <div>
+            $@Html.DisplayFor(modelItem => item.Precio)
+        </div>
+        <div style="font-size: 0.8em;height: 46px;">
             @Html.DisplayFor(modelItem => item.Descripcion)
-        </td>
-        <td>
-            <input id="@item.Codigo" type="number" min="1" max="20" step="1" value="1" /> 
+        </div>
+        <div>
+            <input id="@item.Codigo" type="number" min="1" max="20" step="1" value="1" />
             <button onclick="agregar('@item.Codigo','@item.Nombre',@item.Precio)" class="btn-success">Agregar al carrito</button>
-            <!--@Html.ActionLink("Delete", "Delete", new { id=item.Codigo  })-->
-        </td>
-    </tr>
+        </div>
+    </div>
+
 }
 
-</table>
 
 <script type="text/javascript">
     function agregar(codigo,nombre,precio) {

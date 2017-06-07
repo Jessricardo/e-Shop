@@ -1,6 +1,10 @@
-﻿body {
+﻿
+body {
     padding-top: 50px;
     padding-bottom: 20px;
+    height: 100%;
+    background: url(http://eskipaper.com/images/free-blur-wallpaper-1.jpg);
+    background-attachment:fixed;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -28,5 +32,76 @@ td{
 }
 .navbar-inverse {
     background-color: white !important;
-    border-bottom: 1px solid #8400ff !important;
+    box-shadow: 0px 1px 7px -3px black;
+    border: none;
+    font-family: 'Maven Pro', sans-serif;
+}
+.container.body-content {
+    box-shadow: 1px 1px 9px -1px black;
+    background: white;
+    padding: 1%;
+}
+.row {
+    margin-right: -15px;
+    margin-left: -15px;
+    margin-top: -35px;
+}
+#logo {
+    background: #00000080;
+    width: 25vw;
+    height: 401px;
+    position: absolute;
+    top: 48px;
+    left: 18%;
+    text-align:center;
+    z-index: 1;
+}
+#logo span img {
+    width: 250px;
+    margin-top: 51px;
+}
+#juegos {
+    display: block;
+    margin: 32px auto;
+    padding: 13px 0;
+    width: 175px;
+    border-radius: 6px;
+    filter: invert(100%);
+}
+#logoNav {
+    width: 75px;
+    float: left;
+    margin-right: 9px;
+}
+#latest {
+    text-align: center;
+    font-size: 2em;
+    font-family: Helvetica;
+    font-weight: bold;
+}
+#spartan {
+    width: 1170px;
+    display: block;
+    margin: 46px auto;
+    background: #b6b6b6;
+    padding: 3% 31%;
+    margin-left: -14px;
+    padding-bottom: 18%;
+}
+#textTorneo {
+    color: white;
+    display: block;
+    border-radius: 10px;
+    width: 33%;
+    margin: -17% auto;
+    margin-bottom: 12%;
+    font-size: 0.7em;
+    border: 1px solid white;
+}
+#tituloTorneo {
+    width: 40%;
+}
+#cuadros {
+    width: 100%;
+    margin-top: 2%;
 }

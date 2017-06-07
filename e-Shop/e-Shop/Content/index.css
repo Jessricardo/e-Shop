@@ -1,6 +1,7 @@
 ﻿body, html {
     height: 100%;
-    background: url(https://www.walldevil.com/wallpapers/a84/6801-light-blur.jpg);
+    background: url(http://eskipaper.com/images/free-blur-wallpaper-1.jpg);
+    background-attachment:fixed;
 }
 
 .imagen img {
@@ -10,14 +11,14 @@
 #productos {
     text-align: center;
     display: block;
-    background: none;
-    margin: 4% auto;
-    border: 1px solid white;
-    color: white;
+    background: #8a2c5d;
+    margin: -3% auto;
+    border: 1px solid #7d3259;
+    color: #f3f3f3;
     border-radius: 5px;
     padding: 0.5% 4%;
     font-size: 1em;
-    font-family: sans-serif;
+    font-family: 'Maven Pro', sans-serif;
 }
 
 #pies {
