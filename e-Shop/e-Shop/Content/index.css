@@ -28,3 +28,26 @@
     display: inline-block;
     margin: 0 5%;    
 }
+
+.nosotros {
+    display: inline-block;
+    margin: 0 5%; 
+}
+
+.nosotrostext {
+    display: inline-block;
+    margin: 0 5%; 
+    font-size: 1.3em;
+    font-family: sans-serif;
+}
+
+.fondo {
+    border-radius: 10px;
+}
+
+.group {
+    position: absolute;
+    left: 550px;
+    top: 400px;
+    border-radius: 20px;
+}

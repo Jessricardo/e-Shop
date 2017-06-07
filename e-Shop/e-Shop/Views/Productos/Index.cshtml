@@ -18,18 +18,15 @@
     }
 }
 
-<h2>Index</h2>
+<h2 style="text-align:center;">Nuestros Productos</h2>
 
-<p>
+<!--<p>
     @Html.ActionLink("Agregar producto", "Crear")
-</p>
+</p>-->
 <table class="table">
     <tr>
         <th>
             Imagen
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Codigo)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Nombre)
@@ -52,9 +49,6 @@
             <img src="@item.url" alt="Icono del videojuego" style="width: 150px;filter: drop-shadow(0px 3px 3px #3b3b3b);" />
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Codigo)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.Nombre)
         </td>
         <td>
@@ -68,8 +62,8 @@
         </td>
         <td>
             <input id="@item.Codigo" type="number" min="1" max="20" step="1" value="1" /> 
-            <button onclick="agregar('@item.Codigo','@item.Nombre',@item.Precio)">+</button>
-            @Html.ActionLink("Delete", "Delete", new { id=item.Codigo  })
+            <button onclick="agregar('@item.Codigo','@item.Nombre',@item.Precio)" class="btn-success">Agregar al carrito</button>
+            <!--@Html.ActionLink("Delete", "Delete", new { id=item.Codigo  })-->
         </td>
     </tr>
 }
