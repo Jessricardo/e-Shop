@@ -29,7 +29,7 @@
             @Html.DisplayFor(modelItem => item.idUsuario)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.id)
+            @Html.ActionLink(item.id, "Details", new { id = item.id })
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.estado)
@@ -38,12 +38,23 @@
             @Html.DisplayFor(modelItem => item.total)
         </td>
         <td>
-            @if (item.estado == "No pagado")
+            @switch(item.estado)
             {
-                @Html.ActionLink("Pagado", "Actualizar", new { id = item.id,estado="Pagado" })
+                case "No pagado":
+                    @Html.ActionLink("Pagado", "Actualizar", new { id = item.id, estado = "Pagado" })
+                    break;
+                case "Pagado":
+                    @Html.ActionLink("Enviar", "Actualizar", new { id = item.id, estado = "Enviado" })
+                    break;
+                case "Enviado":
+                    <text>Enviado</text>
+                    break;
             }
-        </td>
-    </tr>
+                
+            </td>
+
+
+        </tr>
 }
 
 </table>
